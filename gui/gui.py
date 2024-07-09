@@ -9,8 +9,9 @@ from DeepLearning.nn import Net, transform
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)   
 class GUI:
-    def __init__(self, model_path, image_size=(28, 28)):
-        self.model = Net()
+    def __init__(self, model_path, image_size=(96, 96)):
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.model = Net(2).to(self.device)
         self.model.load_state_dict(torch.load(model_path))
         self.model.eval()
         self.transform = transforms.Compose([
@@ -25,16 +26,18 @@ class GUI:
 
         self.drawing = False
         self.last_pos = None
+        
 
     def save_label(self, label):
-        name = f'{label}_' + str(len(os.listdir(f'DeepLearning/dataset/{label}')))
+        name = f'{label}_' + str(len(os.listdir(f'DeepLearning/dataset/{label}'))+1)
+        print(f"Saving {name}.png")
         image = pygame.surfarray.array3d(self.screen)
-        # rotate the image
-        image = np.rot90(image, -1).copy()
+        image = np.flipud(image)  # Invert along Y axis
+        image = np.rot90(image, k=-1).copy()
                        
         image_tensor = torch.tensor(image).permute(2, 0, 1).unsqueeze(0).float()
         # Save the image but don't apply self.transform
-        save_image(image_tensor, f'DeepLearning/dataset/0/{name}.png')
+        save_image(image_tensor, f'DeepLearning/dataset/{label}/{name}.png')
 
 
     def run(self):
@@ -65,7 +68,21 @@ class GUI:
                     if event.key == pygame.K_RETURN:
 
                         # get label
-                        self.save_label(1)
+                        self.save_label(3)
+                        image = pygame.surfarray.array3d(self.screen)
+                        image = np.flipud(image)  # Invert along Y axis
+                        image = np.rot90(image, k=-1).copy()
+                        image = self.transform(image).unsqueeze(0).to(self.device)
+                        with torch.no_grad():
+                            output = self.model(image)
+                            # apply softmax
+                            output = torch.softmax(output, dim=1)
+                            print(output)
+                            _, prediction = output.max(1)
+                            
+                            print(f"Predicted Digit: {prediction.item()}")
+                        
+
                         """
                         # Get the image
                         image = pygame.surfarray.array3d(self.screen)
