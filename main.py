@@ -7,7 +7,7 @@ def main():
     # Initialize the GUI
     screen = pygame.display.set_mode((280, 280))
     pygame.display.set_caption('MNIST Digit Recognizer')
-    gui = GUI('DeepLearning/mnist_netV8.pth')
+    gui = GUI('DeepLearning/mnist_netV11.pth')
     gui.run()
 
 if __name__ == '__main__':
