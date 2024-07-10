@@ -68,7 +68,7 @@ class GUI:
                     if event.key == pygame.K_RETURN:
 
                         # get label
-                        self.save_label(2)
+                        #self.save_label(0)
                         image = pygame.surfarray.array3d(self.screen)
                         image = np.flipud(image)  # Invert along Y axis
                         image = np.rot90(image, k=-1).copy()
