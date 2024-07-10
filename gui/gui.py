@@ -31,8 +31,8 @@ class GUI:
         self.last_pos = None
         
 
-    def save_label(self, label):
-        name = f'{label}_' + str(len(os.listdir(f'DeepLearning/dataset/{label}'))+1)
+    def save_label(self, label, path='DeepLearning/dataset/'):
+        name = f'{label}_' + str(len(os.listdir(f'{path}{label}'))+1)
         print(f"Saving {name}.png")
         image = pygame.surfarray.array3d(self.screen)
         image = np.flipud(image)  # Invert along Y axis
@@ -40,7 +40,7 @@ class GUI:
                        
         image_tensor = torch.tensor(image).permute(2, 0, 1).unsqueeze(0).float()
         # Save the image but don't apply self.transform
-        save_image(image_tensor, f'DeepLearning/dataset/{label}/{name}.png')
+        save_image(image_tensor, f'{path}{label}/{name}.png')
 
     def display_prediction(self, prediction):
         popup = Tk()
@@ -81,12 +81,13 @@ class GUI:
                 
                 elif event.type == pygame.K_SPACE:
                     self.screen.fill(BLACK)
+
                 elif event.type == pygame.KEYDOWN:
                     # press enter
                     if event.key == pygame.K_RETURN:
 
                         # get label
-                        #self.save_label(3)
+                        self.save_label(9, path='DeepLearning/test_dataset/')
                         image = pygame.surfarray.array3d(self.screen)
                         image = np.flipud(image)  # Invert along Y axis
                         image = np.rot90(image, k=-1).copy()
