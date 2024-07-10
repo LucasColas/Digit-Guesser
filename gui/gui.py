@@ -11,7 +11,7 @@ BLACK = (0, 0, 0)
 class GUI:
     def __init__(self, model_path, image_size=(96, 96)):
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.model = Net(4).to(self.device)
+        self.model = Net(5).to(self.device)
         self.model.load_state_dict(torch.load(model_path))
         self.model.eval()
         self.transform = transforms.Compose([
@@ -63,12 +63,13 @@ class GUI:
                             pygame.draw.line(self.screen, WHITE, self.last_pos, pos, 10)
                         self.last_pos = pos
 
+                # TODO: Add clear screen functionality
                 elif event.type == pygame.KEYDOWN:
                     # press enter
                     if event.key == pygame.K_RETURN:
 
                         # get label
-                        #self.save_label(0)
+                        #self.save_label(4)
                         image = pygame.surfarray.array3d(self.screen)
                         image = np.flipud(image)  # Invert along Y axis
                         image = np.rot90(image, k=-1).copy()
