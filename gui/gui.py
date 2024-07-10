@@ -1,4 +1,5 @@
 import os
+from tkinter import Tk, Label, Button
 
 import pygame
 import torch
@@ -6,6 +7,8 @@ from torchvision import transforms
 from torchvision.utils import save_image
 import numpy as np
 from DeepLearning.nn import Net, transform
+
+
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)   
 class GUI:
@@ -39,6 +42,18 @@ class GUI:
         # Save the image but don't apply self.transform
         save_image(image_tensor, f'DeepLearning/dataset/{label}/{name}.png')
 
+    def display_prediction(self, prediction):
+        popup = Tk()
+        popup.wm_title("Prediction")
+
+        label = Label(popup, text=f"Predicted Digit: {prediction}", font=("Helvetica", 16))
+        label.pack(side="top", fill="x", pady=20, padx=20)
+
+        button = Button(popup, text="OK", command=popup.destroy)
+        button.pack(side="bottom", pady=10)
+
+        popup.mainloop()
+
 
     def run(self):
         # Run the game
@@ -63,13 +78,15 @@ class GUI:
                             pygame.draw.line(self.screen, WHITE, self.last_pos, pos, 10)
                         self.last_pos = pos
 
-                # TODO: Add clear screen functionality
+                
+                elif event.type == pygame.K_SPACE:
+                    self.screen.fill(BLACK)
                 elif event.type == pygame.KEYDOWN:
                     # press enter
                     if event.key == pygame.K_RETURN:
 
                         # get label
-                        #self.save_label(9)
+                        self.save_label(3)
                         image = pygame.surfarray.array3d(self.screen)
                         image = np.flipud(image)  # Invert along Y axis
                         image = np.rot90(image, k=-1).copy()
@@ -82,28 +99,9 @@ class GUI:
                             _, prediction = output.max(1)
                             
                             print(f"Predicted Digit: {prediction.item()}")
-                        
+                            #self.display_prediction(prediction.item())
 
-                        """
-                        # Get the image
-                        image = pygame.surfarray.array3d(self.screen)
-                        image_gray = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
-                        
-                        # Resize to 28x28 (assuming MNIST-like input size)
-                        image_resized = pygame.surfarray.make_surface(image_gray).convert()
-                        image_resized = pygame.transform.scale(image_resized, self.image_size)
-                        
-                        # Convert to tensor and normalize
-                        image_array = pygame.surfarray.pixels2d(image_resized)
-                        image_tensor = torch.tensor(image_array).unsqueeze(0).unsqueeze(0).float()
-                        image_tensor /= 255.0  # Scale to [0, 1] range
-
-                        # Get the prediction
-                        with torch.no_grad():
-                            output = self.model(image_tensor)
-                            _, prediction = output.max(1)
-                            print(f"Predicted Digit: {prediction.item()}")
-                        """
+                    
                         # Clear the screen
                         self.screen.fill(BLACK)
             pygame.display.update()
