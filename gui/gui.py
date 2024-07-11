@@ -6,11 +6,13 @@ import torch
 from torchvision import transforms
 from torchvision.utils import save_image
 import numpy as np
+
 from DeepLearning.nn import Net, transform
 
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)   
+
 class GUI:
     def __init__(self, model_path, image_size=(96, 96)):
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -56,10 +58,10 @@ class GUI:
 
 
     def run(self):
-        # Run the game
+        
         self.screen.fill(BLACK)
         while True:
-            # Check for events
+           
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -83,14 +85,16 @@ class GUI:
                     self.screen.fill(BLACK)
 
                 elif event.type == pygame.KEYDOWN:
+                    
                     # press enter
                     if event.key == pygame.K_RETURN:
 
                         # get label
-                        self.save_label(9, path='DeepLearning/test_dataset/')
+                        self.save_label(9)
                         image = pygame.surfarray.array3d(self.screen)
                         image = np.flipud(image)  # Invert along Y axis
                         image = np.rot90(image, k=-1).copy()
+
                         image = self.transform(image).unsqueeze(0).to(self.device)
                         with torch.no_grad():
                             output = self.model(image)
@@ -100,7 +104,7 @@ class GUI:
                             _, prediction = output.max(1)
                             
                             print(f"Predicted Digit: {prediction.item()}")
-                            #self.display_prediction(prediction.item())
+                            self.display_prediction(prediction.item())
 
                     
                         # Clear the screen

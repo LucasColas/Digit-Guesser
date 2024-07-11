@@ -1,11 +1,11 @@
 import pygame
 from gui.gui import GUI
-# Initialize the game
+
+# Initialize pygame 
 pygame.init()
 
 def main():
 
-    # Initialize the GUI
     screen = pygame.display.set_mode((280, 280))
     pygame.display.set_caption('Digit Recognizer')
     gui = GUI('DeepLearning/netV14.pth')
