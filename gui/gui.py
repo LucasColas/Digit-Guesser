@@ -39,7 +39,7 @@ class GUI:
         image = pygame.surfarray.array3d(self.screen)
         image = np.flipud(image)  # Invert along Y axis
         image = np.rot90(image, k=-1).copy()
-                       
+        
         image_tensor = torch.tensor(image).permute(2, 0, 1).unsqueeze(0).float()
         # Save the image but don't apply self.transform
         save_image(image_tensor, f'{path}{label}/{name}.png')
@@ -90,11 +90,15 @@ class GUI:
                     if event.key == pygame.K_RETURN:
 
                         # get label
-                        #self.save_label(9)
+                        #self.save_label(2)
+                        
+                        
+                        
+                        
                         image = pygame.surfarray.array3d(self.screen)
                         image = np.flipud(image)  # Invert along Y axis
                         image = np.rot90(image, k=-1).copy()
-
+                        
                         image = self.transform(image).unsqueeze(0).to(self.device)
                         with torch.no_grad():
                             output = self.model(image)
