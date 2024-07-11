@@ -90,7 +90,7 @@ class GUI:
                     if event.key == pygame.K_RETURN:
 
                         # get label
-                        self.save_label(9)
+                        self.save_label(9, path='DeepLearning/test_dataset/')
                         image = pygame.surfarray.array3d(self.screen)
                         image = np.flipud(image)  # Invert along Y axis
                         image = np.rot90(image, k=-1).copy()
@@ -104,7 +104,7 @@ class GUI:
                             _, prediction = output.max(1)
                             
                             print(f"Predicted Digit: {prediction.item()}")
-                            self.display_prediction(prediction.item())
+                            #self.display_prediction(prediction.item())
 
                     
                         # Clear the screen
