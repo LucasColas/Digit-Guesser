@@ -3,15 +3,15 @@
 GUI that uses AI to predict a drawn digit.
 
 ## How to use
-git clone 
+git clone :
 ```bash
 git clone git@github.com:LucasColas/Digit-Guesser.git
 ```
-Go to the directory
+Go to the directory :
 ```bash
 cd Digit-Guesser
 ```
-Install the requirements (with pip for exemple) 
+Install the requirements (with pip for exemple) :
 ```bash
 pip install -r requirements.txt
 ```
@@ -27,5 +27,7 @@ Draw a digit :
 
 press enter. And it will predict the digit : 
 
-<img src="https://github.com/LucasColas/Digit-Guesser/blob/main/img/gui_pred.png" width=25% height=25%>
+<img src="https://github.com/LucasColas/Digit-Guesser/blob/main/img/gui_pred.png" width=45% height=35%>
 
+
+Other keyboard inputs. Press the delete key to erase the current draw on the gui.
