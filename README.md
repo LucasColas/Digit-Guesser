@@ -23,5 +23,9 @@ python main.py
 
 Draw a digit :
 
+<img src="https://github.com/LucasColas/Digit-Guesser/blob/main/img/gui.png" width=25% height=25%>
 
-press enter
+press enter. And it will predict the digit : 
+
+<img src="https://github.com/LucasColas/Digit-Guesser/blob/main/img/gui_pred.png" width=25% height=25%>
+
