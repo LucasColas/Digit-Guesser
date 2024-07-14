@@ -21,6 +21,7 @@ and then run the code :
 python main.py
 ```
 
-Draw a digit
+Draw a digit :
+
 
 press enter
