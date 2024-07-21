@@ -23,6 +23,7 @@ python main.py
 
 ## Draw and predict a digit
 Draw a digit by pressing the left button of your mouse and going over the gui. Unpress the left button when you don't want to draw anything.
+
 <img src="https://github.com/LucasColas/Digit-Guesser/blob/main/img/gui.png" width=25% height=25%>
 
 press enter. And it will predict the digit : 
